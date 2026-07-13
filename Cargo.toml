@@ -1,0 +1,11 @@
+[workspace]
+members = [
+    "crates/indexbrain-core",
+    "crates/indexbrain-collector",
+    "crates/indexbrain-server",
+    "crates/indexbrain-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
