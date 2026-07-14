@@ -1,0 +1,16 @@
+[package]
+name = "indexbrain-features"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+indexbrain-core = { path = "../indexbrain-core"}
+anyhow = "1"
+serde = { version = "1", features = ["derive"]}
+serde_yaml = "0.9"
+chrono = "0.4"
+tracing = "0.1"
+
+[dev-dependencies]
+approx = "0.5" #for float comparisons in tests
+

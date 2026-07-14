@@ -3,9 +3,7 @@ database:
   poll_interval_secs: 60
   required_extensions:
     - pg_stat_statements
-    - hypog
 
 collector:
-  fetch_query_text: true
   max_queries: 1000
 

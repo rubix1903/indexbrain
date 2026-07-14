@@ -14,8 +14,7 @@ async fn main() -> Result<()> {
 
     // Build collector
     let collector = Collector::new(
-        &settings.database.url,
-        settings.collector.fetch_query_text,
+        &settings.database,
         settings.collector.max_queries,
     ).await?;
 

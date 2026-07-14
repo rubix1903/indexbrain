@@ -3,7 +3,7 @@ members = [
     "crates/indexbrain-core",
     "crates/indexbrain-collector",
     "crates/indexbrain-server",
-    "crates/indexbrain-cli",
+    "crates/indexbrain-cli", "crates/indexbrain-features",
 ]
 resolver = "2"
 
