@@ -1,12 +1,14 @@
 use serde::Deserialize;
 use config::{Config, File, Environment};
 use crate::features::FeaturesConfig;
+use crate::bandit::BanditConfig;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct Settings {
     pub database: DatabaseConfig,
     pub collector: CollectorConfig,
     pub features: FeaturesConfig,
+    pub bandit: BanditConfig,
 }
 
 #[derive(Debug, Deserialize, Clone)]

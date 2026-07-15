@@ -1001,12 +1001,21 @@ dependencies = [
 [[package]]
 name = "indexbrain-bandit"
 version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "indexbrain-core",
+ "rand",
+ "serde",
+ "serde_yaml",
+ "tracing",
+]
 
 [[package]]
 name = "indexbrain-cli"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "indexbrain-bandit",
  "indexbrain-collector",
  "indexbrain-core",
  "indexbrain-features",

@@ -1,6 +1,7 @@
 pub mod settings;
 pub use settings::Settings;
 pub mod features;
+pub mod bandit;
 use serde::{Deserialize, Serialize};
 use chrono::{DateTime, Utc};
 

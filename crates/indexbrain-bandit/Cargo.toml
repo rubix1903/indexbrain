@@ -4,3 +4,9 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
+indexbrain-core = { path = "../indexbrain-core"}
+anyhow = "1"
+serde = { version = "1", features = ["derive"]}
+serde_yaml = "0.9"
+rand = "0.8"
+tracing = "0.1"
