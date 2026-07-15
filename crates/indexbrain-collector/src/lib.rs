@@ -4,7 +4,6 @@ use indexbrain_core::{
     WorkloadSnapshot, QueryStats, TableStats, IndexInfo,
 };
 use sqlx::postgres::PgPoolOptions;
-use sqlx::Row;
 use chrono::Utc;
 use tracing::info;
 

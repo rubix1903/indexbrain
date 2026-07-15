@@ -1,8 +1,9 @@
 database:
-  url: "postgres://postgres:indexbrain@localhost/testdb"
+  url: "postgres://postgres:indexbrain@127.0.0.1/testdb"
   poll_interval_secs: 60
   required_extensions:
     - pg_stat_statements
+    - hypopg
 
 collector:
   max_queries: 1000
@@ -17,12 +18,20 @@ features:
           min: 0.0
           max: 1000.0
     - feature_type: "table_scan_ratio"
-      normalisation:
+      normalisation: "none"
 
-        bandit:
-          algorithm: "epsilon_greedy"
-          epsilon: 0.1
-          num_arms: 20
-          reward:
-            improvement_weight: 1.0
-            storage_penalty_factor: 0.01
+bandit:
+  algorithm: "epsilon_greedy"
+  epsilon: 0.1
+  num_arms: 20
+  reward:
+    improvement_weight: 1.0
+    storage_penalty_factor: 0.01
+
+planner:
+  max_candidates_per_table: 5
+  max_total_candidates: 20
+
+whatif:
+  storage_penalty_factor: 0.01
+  improvement_weight: 1.0

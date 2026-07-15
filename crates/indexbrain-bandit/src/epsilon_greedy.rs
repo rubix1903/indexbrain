@@ -1,6 +1,5 @@
 use anyhow::Result;
 use rand::Rng;
-use indexbrain_core::bandit::BanditConfig;
 use super::{Arm, Bandit};
 
 pub struct EpsilonGreedy {

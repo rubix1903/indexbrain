@@ -5,31 +5,8 @@ use indexbrain_collector::Collector;
 use indexbrain_features::FeaturePipeline;
 use tracing::info;
 use indexbrain_bandit::create_bandit;
-use indexbrain_bandit::Arm;
-use indexbrain_core::WorkloadSnapshot;
+use indexbrain_planner::generate_candidates;
 
-fn generate_arms(snapshot: &WorkloadSnapshot, max_arms: usize) -> Vec<Arm> {
-    let mut arms = Vec::new();
-    for table in &snapshot.tables {
-        if arms.len() >= max_arms {
-            break;
-        }
-        // For each table,proposing a dummy single‑column index on the first column we can guess?
-        // We don't have column info yet, so we use a placeholder column name "???".
-        arms.push(Arm {
-            id: arms.len(),
-            description: format!("CREATE INDEX ON {}.{}(???);", table.schema, table.table_name),
-        });
-    }
-    // If no tables, add a fallback arm
-    if arms.is_empty() {
-        arms.push(Arm {
-            id: 0,
-            description: "No candidate indexes".into(),
-        });
-    }
-    arms
-}
 #[tokio::main]
 async fn main() -> Result<()> {
     // Initialize tracing
@@ -40,7 +17,6 @@ async fn main() -> Result<()> {
     tracing::info!("Loaded configuration: {:?}", settings);
 
     let pipeline = FeaturePipeline::from_config(&settings.features)?;
-
     let mut bandit = create_bandit(&settings.bandit)?;
 
     // Build collector
@@ -59,7 +35,7 @@ async fn main() -> Result<()> {
         info!("Context vector: {:?}", context);
 
         //Generating candidate arms from the snapshot
-        let arms = generate_arms(&snapshot, settings.bandit.num_arms);
+        let arms = generate_candidates(&settings.planner, &snapshot);
         //Selecting action
         let chosen_arm_idx = bandit.select_action(&context, &arms)?;
         let chosen_arm = &arms[chosen_arm_idx];

@@ -1,0 +1,14 @@
+[package]
+name = "indexbrain-whatif"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+indexbrain-core = { path = "../indexbrain-core" }
+anyhow = "1"
+sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "chrono"] }
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_yaml = "0.9"
+tracing = "0.1"
+serde_json = "1.0.150"

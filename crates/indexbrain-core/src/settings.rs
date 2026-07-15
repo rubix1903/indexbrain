@@ -2,14 +2,8 @@ use serde::Deserialize;
 use config::{Config, File, Environment};
 use crate::features::FeaturesConfig;
 use crate::bandit::BanditConfig;
-
-#[derive(Debug, Deserialize, Clone)]
-pub struct Settings {
-    pub database: DatabaseConfig,
-    pub collector: CollectorConfig,
-    pub features: FeaturesConfig,
-    pub bandit: BanditConfig,
-}
+use crate::planner::PlannerConfig;
+use crate::whatif::WhatIfConfig;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct DatabaseConfig {
@@ -23,6 +17,15 @@ pub struct CollectorConfig {
     pub max_queries: usize,
 }
 
+#[derive(Debug, Deserialize, Clone)]
+pub struct Settings {
+    pub database: DatabaseConfig,
+    pub collector: CollectorConfig,
+    pub features: FeaturesConfig,
+    pub bandit: BanditConfig,
+    pub planner: PlannerConfig,
+    pub whatif: WhatIfConfig,
+}
 
 impl Settings {
     pub fn from_file_and_env(config_file: &str) -> Result<Self, config::ConfigError> {

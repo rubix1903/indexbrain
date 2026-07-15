@@ -1,15 +1,8 @@
 use anyhow::Result;
 use indexbrain_core::bandit::BanditConfig;
-
+use indexbrain_core::Arm;
 pub mod epsilon_greedy;
 pub use epsilon_greedy::EpsilonGreedy;
-
-//Represents a candidate index (or set of indexes) – an arm of the bandit.
-#[derive(Debug, Clone)]
-pub struct Arm {
-    pub id: usize,
-    pub description: String,
-}
 
 // generic bandit interface.
 pub trait Bandit: Send + Sync {

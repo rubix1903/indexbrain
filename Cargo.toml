@@ -6,6 +6,8 @@ members = [
     "crates/indexbrain-cli",
     "crates/indexbrain-features",
     "crates/indexbrain-bandit",
+    "crates/indexbrain-planner",
+    "crates/indexbrain-whatif",
 ]
 resolver = "2"
 

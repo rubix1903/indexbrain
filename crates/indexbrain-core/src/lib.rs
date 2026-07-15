@@ -2,6 +2,9 @@ pub mod settings;
 pub use settings::Settings;
 pub mod features;
 pub mod bandit;
+pub mod planner;
+pub mod whatif;
+
 use serde::{Deserialize, Serialize};
 use chrono::{DateTime, Utc};
 
@@ -53,4 +56,15 @@ pub struct IndexInfo {
     pub columns: Vec<String>,
     pub is_unique: bool,
     pub index_type: String,   // btree, hash, etc.
+}
+
+// candidate index (arm of the bandit)
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Arm {
+    pub id: usize,
+    pub schema: String,
+    pub table_name: String,
+    pub columns: Vec<String>,
+    pub index_type: String,
+    pub description: String,
 }
