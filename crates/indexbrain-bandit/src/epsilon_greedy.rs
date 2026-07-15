@@ -20,13 +20,21 @@ impl EpsilonGreedy {
 impl Bandit for EpsilonGreedy {
     fn select_action(&mut self, _context: &[f64], arms: &[Arm]) -> Result<usize> {
         let mut rng = rand::thread_rng();
-        if rng.gen::<f64>() < self.epsilon || self.counts.iter().all(|&c| c == 0) {
-            // Explore: pick a random arm
-            let idx = rng.gen_range(0..arms.len());
+        let n_arms = arms.len();
+        if n_arms == 0 {
+            anyhow::bail!("No arms available");
+        }
+        if self.q_values.len() < n_arms {
+            self.q_values.resize(n_arms, 0.0);
+            self.counts.resize(n_arms, 0);
+        }
+        if rng.gen::<f64>() < self.epsilon || self.counts.iter().take(n_arms).all(|&c| c == 0) {
+            // Explore: pick a random valid arm
+            let idx = rng.gen_range(0..n_arms);
             Ok(idx)
         } else {
-            // Exploit - picking the arm with highest estimated reward
             let best = self.q_values.iter()
+                .take(n_arms)
                 .enumerate()
                 .max_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap())
                 .map(|(i, _)| i)
