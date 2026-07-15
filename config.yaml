@@ -7,3 +7,22 @@ database:
 collector:
   max_queries: 1000
 
+features:
+  features:
+    - feature_type: "query_mix_ratio"
+      normalisation: "none"
+    - feature_type: "avg_exec_time"
+      normalisation:
+        minmax:
+          min: 0.0
+          max: 1000.0
+    - feature_type: "table_scan_ratio"
+      normalisation:
+
+        bandit:
+          algorithm: "epsilon_greedy"
+          epsilon: 0.1
+          num_arms: 20
+          reward:
+            improvement_weight: 1.0
+            storage_penalty_factor: 0.01

@@ -999,12 +999,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "indexbrain-bandit"
+version = "0.1.0"
+
+[[package]]
 name = "indexbrain-cli"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "indexbrain-collector",
  "indexbrain-core",
+ "indexbrain-features",
  "serde_json",
  "tokio",
  "tracing",
@@ -1034,6 +1039,7 @@ dependencies = [
  "config",
  "serde",
  "serde_json",
+ "serde_yaml",
 ]
 
 [[package]]

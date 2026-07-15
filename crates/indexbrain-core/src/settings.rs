@@ -1,10 +1,12 @@
 use serde::Deserialize;
 use config::{Config, File, Environment};
+use crate::features::FeaturesConfig;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct Settings {
     pub database: DatabaseConfig,
     pub collector: CollectorConfig,
+    pub features: FeaturesConfig,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -18,6 +20,7 @@ pub struct DatabaseConfig {
 pub struct CollectorConfig {
     pub max_queries: usize,
 }
+
 
 impl Settings {
     pub fn from_file_and_env(config_file: &str) -> Result<Self, config::ConfigError> {
