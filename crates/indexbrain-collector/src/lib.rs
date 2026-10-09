@@ -58,6 +58,10 @@ impl Collector {
         Ok(Self { pool, max_queries })
     }
 
+    pub fn pool(&self) -> &sqlx::PgPool {
+        &self.pool
+    }
+
     /// Takes a snapshot of current workload statistics.
     pub async fn take_snapshot(&self) -> Result<WorkloadSnapshot> {
         let queries = self.collect_queries().await?;

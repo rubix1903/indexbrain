@@ -1,6 +1,6 @@
 database:
   url: "postgres://postgres:indexbrain@127.0.0.1/testdb"
-  poll_interval_secs: 60
+  poll_interval_secs: 15   # sped up
   required_extensions:
     - pg_stat_statements
     - hypopg

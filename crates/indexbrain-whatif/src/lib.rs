@@ -2,6 +2,7 @@ use anyhow::{Result, Context};
 use indexbrain_core::Arm;
 use sqlx::PgPool;
 use tracing::info;
+use regex::Regex;
 
 pub async fn evaluate_arm(
     pool: &PgPool,
@@ -51,14 +52,21 @@ pub async fn evaluate_arm(
     Ok(reward)
 }
 
+  // <-- add this at the top of the file
 async fn get_query_cost(
     tx: &mut sqlx::PgConnection,
     query: &str,
 ) -> Result<f64> {
-    let explain_stmt = format!("EXPLAIN (FORMAT JSON) {}", query);
+    // Replace $1, $2, etc. with a dummy integer (1) so sqlx doesn't treat them as bind params
+    // and the query remains valid for EXPLAIN (cost estimates don't depend on actual values).
+    let re = Regex::new(r"\$\d+").unwrap();
+    let safe_query = re.replace_all(query, "1");
+
+    let explain_stmt = format!("EXPLAIN (FORMAT JSON) {}", safe_query);
     let row: (serde_json::Value,) = sqlx::query_as(&explain_stmt)
         .fetch_one(tx)
-        .await?;
+        .await
+        .context("Failed to run EXPLAIN")?;
     let plan = &row.0[0]["Plan"];
     let total_cost = plan["Total Cost"].as_f64().unwrap_or(0.0);
     Ok(total_cost)
